@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ActionSheet 原生组件</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+        }
+
+        .weui-mask {
+            z-index: 2;
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, .6);
+        }
+
+        .weui-actionsheet-btn {
+
+            justify-content: center;
+            text-align: center;
+            height: 30px;
+            width: 90%;
+            margin-top: 50px;
+        }
+
+        .weui-actionsheet__menu {
+
+            background-color: #fff;
+        }
+
+        .weui-actionsheet__title {
+            color: #808080;
+            background: #fcfcfd;
+        }
+
+        .weui-actionsheet__cell {
+            position: relative;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .weui-actionsheet__cell:first-child:before {
+            display: none;
+        }
+
+        .weui-actionsheet__cell:before {
+            content: " ";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 1px;
+            border-bottom: 1px solid #e5e5e5;
+            color: #e5e5e5;
+            -webkit-transform-origin: 0 100%;
+            transform-origin: 0 100%;
+            -webkit-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+        }
+
+        .weui-actionsheet {
+            text-align: center;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            -webkit-transform: translate(0, 100%);
+            transform: translate(0, 100%);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            z-index: 5000;
+            width: 100%;
+            background-color: #EFEFF4;
+            -webkit-transition: -webkit-transform .3s;
+            transition: -webkit-transform .3s;
+            transition: transform .3s;
+            transition: transform .3s, -webkit-transform .3s;
+        }
+
+        .weui-actionsheet-btn {
+            display: inline;
+            z-index: 1;
+
+        }
+        .weui-actionsheet_toggle {
+            /* -webkit-transform: translate(0, 0); */
+            transform: translate(0, 0);
+        }
+        .weui-actionsheet-btn{
+            color: #000000;
+            background-color: #F8F8F8;
+            border-radius: 5px;
+        }    
+        </style>
+</head>
+
+<body>
+    <a class="weui-actionsheet-btn" onclick="button()">按钮</a>
+    <div class="weui-mask" id="1" onclick="mas()"></div>
+    <!-- 操作的列表 -->
+    <div class="weui-actionsheet" id="2">
+        <div class="weui-actionsheet__title">
+            <p class="weui-actionsheet__title-text">
+                这是一个标题。可以一行也可以两行
+            </p>
+        </div>
+        <div class="weui-actionsheet__menu">
+            <div class="weui-actionsheet__cell">实例菜单</div>
+            <div class="weui-actionsheet__cell">实例菜单</div>
+            <div class="weui-actionsheet__cell">实例菜单</div>
+            <div class="weui-actionsheet__cell">实例菜单</div>
+        </div>
+        <div class="weui-actionsheet__action">
+            <div class="weui-actionsheet__cell" onclick="mas()">
+                取消
+            </div>
+        </div>
+    </div>
+    <script>
+        var button = function () {
+            var mask = document.getElementById("1");
+            mask.style.display = "inline-block";
+            var title = document.getElementById("2");
+            title.style.display = "inline-block";
+            title.classList.add('weui-actionsheet_toggle');
+        }
+        var mas = function(){
+            var mask = document.getElementById("1");
+            mask.style.display = "none";
+            var title = document.getElementById("2");
+            title.classList.remove('weui-actionsheet_toggle');
+            //title.style.display = "none";
+        }
+    </script>
+</body>
+
+</html>
