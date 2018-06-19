@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!-- vue 是MVVM
+    data-binding 
+    template  compile  -->
+    <!-- 支持对{{}}解析， template compile
+    tmeplate ->html 之间  {{key}}   data {name:'汪西发'}   回填 
+    1  打坑 2 填值 正则-->
+    <div id="app">
+        <h3>姓名</h3>
+        <p>{{name}}</p>
+        <h3>年龄</h3>
+        <p>{{age}}</p>
+        <div class="msg">
+            <p>{{msg}}</p>
+        </div>
+    </div>
+    <script>
+        class Vue {
+            constructor(opt) {
+                this.opt = opt;
+                this.root = document.querySelector(this.opt.el);
+                this.compile(this.root);
+            }
+            compile(node) {
+                // {{.*}}
+                // 遍历节点, 文本结点
+                // console.log(node.childNodes);
+                [].forEach.call(node.childNodes, child => {
+                    // console.log(child.innerHTML);
+                    // 只有{{}}才需要去做,正则
+                    // 子节点下面还有么有孙节点
+                    if (!child.firstElementChild && /\{\{(.*)\}\}/.test(child.innerHTML)) {
+                        let key = RegExp.$1.trim();
+                        child.innerHTML = child.innerHTML.replace(/\{\{(.*)\}\}/, this.opt.data[key]);
+                        // child.innerHTML = this.opt.data.name;
+                    } else if (child.firstElementChild) {
+                        this.compile(child);
+                    }
+                })
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            // 快一点 
+            let options = {
+                el: '#app',
+                data: {
+                    name: '检索中...',
+                    age: 30,
+                    msg: 'vue 高手, 月薪五万'
+                }
+            }
+            new Vue(options)
+        });
+    </script>
+</body>
+</html>
